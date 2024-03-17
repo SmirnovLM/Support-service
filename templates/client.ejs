@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>User Dashboard</title>
+</head>
+<body class="second">
+    <h1>Welcome, <%= fullname %></h1>
+    <form class="first" action="/createproblem" method="post">
+        <textarea name="problemDescription" placeholder="Напишите описание проблемы" required></textarea>
+        <p><button class="first" type="submit">Отправить проблему</button></p>
+    </form>
+
+    <% if (problems && problems.length > 0) { %>
+    <p>
+    <table>
+        <thead>
+            <tr>
+                <th>Описание проблемы</th>
+                <th>Статус</th>
+                <th>Комментарий от Мастера</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% problems.forEach(problem => { %>
+            <tr>
+                <td><%= problem.description %></td>
+                <% if (problem.status === 0) { %>
+                    <td class="pend">в расмотрении</td>
+                <% } else if (problem.status === 1) { %>
+                    <td class="proc">решается</td>
+                <% } else { %>
+                    <td class="done">решена</td>
+                <% } %>    
+                <td class="problem-description"><%= problem.comment %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>    
+    </p>
+    <% } else { %>
+        <p>Заявленные проблемы отсутствуют</p>
+    <% } %>
+    <form action="/logout">
+        <p><button class="first">Выйти</button></p>
+    </form>
+</body>
+</html>

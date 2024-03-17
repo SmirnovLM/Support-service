@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Master Dashboard</title>
+</head>
+<body class="second">
+    <h1>Добро пожаловать, <%= loginMaster %></h1>
+    <% if (problems && problems.length > 0) { %>
+    <p>
+    <table>
+        <thead>
+            <tr>
+                <th>Client FullName</th>
+                <th>Client Phone Number</th>
+                <th>Description of the problem</th>
+                <th>Comment</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% problems.forEach((problem, index) => { %>
+                <tr>
+                    <td><%= clientsInfo[index].fullname %></td>
+                    <td><%= clientsInfo[index].phone %></td>
+                    <td class="problem-description"><%= problem.description %></td>
+                    <form action="/solveproblem" method="post">
+                    <td><textarea type="text" name="comment" placeholder="Добавьте комментарий" required></textarea></td>
+                    <td><button class="second" type="submit" name="problem_id" value="<%= problem.problem_id %>">-></button></td>
+                    </form>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    </p>
+    <% } else { %>
+        <p>Заявленные проблемы отсутствуют</p>
+    <% } %>
+
+    <form action="/logout">
+        <p><button class="first">Выйти</button></p>
+    </form>
+
+</body>
+</html>
